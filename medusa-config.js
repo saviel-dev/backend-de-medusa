@@ -34,7 +34,7 @@ module.exports = defineConfig({
           },
         ],
       },
-    } as any, // eslint-disable-line @typescript-eslint/no-explicit-any
+    } // eslint-disable-line @typescript-eslint/no-explicit-any
   ],
 });
 
