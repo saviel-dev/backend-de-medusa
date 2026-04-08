@@ -1,4 +1,11 @@
 services:
+  # Cache Redis (Key-Value)
+  - type: keyvalue
+    name: babygoo-redis
+    plan: free
+    region: ohio
+    ipAllowList: []
+    
   # Servidor Backend de Medusa
   - type: web
     name: babygoo-backend
@@ -16,7 +23,7 @@ services:
           property: connectionString
       - key: REDIS_URL
         fromService:
-          type: redis
+          type: keyvalue
           name: babygoo-redis
           property: connectionString
       - key: PORT
@@ -44,10 +51,3 @@ databases:
     user: medusa
     plan: starter
     region: ohio
-
-# Cache Redis administrado por Render
-  - type: redis
-    name: babygoo-redis
-    plan: free
-    region: ohio
-    ipAllowList: [] # Permite acceso solo a servicios dentro de Render
