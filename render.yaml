@@ -6,7 +6,7 @@ services:
     plan: free
     region: ohio
     buildCommand: "npm install && npm run build"
-    startCommand: "npm run start"
+    startCommand: "cd .medusa/server && npm run start"
     envVars:
       - key: NODE_ENV
         value: production

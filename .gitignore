@@ -23,5 +23,3 @@ build
 
 # Archivos de entorno de tests
 .env.test
-
-.medusa
