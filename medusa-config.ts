@@ -3,7 +3,7 @@ import { loadEnv, defineConfig } from "@medusajs/framework/utils";
 loadEnv(process.env.NODE_ENV || "development", process.cwd());
 
 export default defineConfig({
-  project: {
+  projectConfig: {
     databaseUrl: process.env.DATABASE_URL,
     http: {
       storeCors: process.env.STORE_CORS!,
@@ -15,6 +15,10 @@ export default defineConfig({
   },
 
   modules: [
+    // Payment module con Stripe provider — Medusa v2
+    // Ver: https://docs.medusajs.com/resources/commerce-modules/payment/payment-provider
+    // NOTA: el cast `as any` es necesario por un conflicto de tipos en defineConfig()
+    // de @medusajs/framework@2.13.1 cuando se usa la forma de array de módulos.
     {
       resolve: "@medusajs/payment",
       options: {
@@ -29,16 +33,8 @@ export default defineConfig({
           },
         ],
       },
-    },
-
-    {
-      resolve: `medusa-file-cloudinary`,
-      options: {
-        cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-        api_key: process.env.CLOUDINARY_API_KEY,
-        api_secret: process.env.CLOUDINARY_API_SECRET,
-        secure: true,
-      },
-    },
+    } as any, // eslint-disable-line @typescript-eslint/no-explicit-any
   ],
 });
+
+

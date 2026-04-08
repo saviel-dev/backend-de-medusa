@@ -26,8 +26,7 @@
     "@medusajs/cli": "2.13.1",
     "@medusajs/framework": "2.13.1",
     "@medusajs/medusa": "2.13.1",
-    "@medusajs/payment-stripe": "^2.13.1",
-    "medusa-file-cloudinary": "^1.0.2"
+    "@medusajs/payment-stripe": "^2.13.1"
   },
   "devDependencies": {
     "@medusajs/test-utils": "2.13.1",
@@ -49,6 +48,6 @@
   "engines": {
     "node": ">=20"
   },
-  "packageManager": "npm@10.9.4"
+  "packageManager": "npm@10.9.3"
 } 
 

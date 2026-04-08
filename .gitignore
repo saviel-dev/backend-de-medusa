@@ -16,11 +16,12 @@ medusa-db.sql
 build
 .cache
 
-.yarn/*
-!.yarn/patches
-!.yarn/plugins
-!.yarn/releases
-!.yarn/sdks
-!.yarn/versions
+
+# Yarn — eliminado, el proyecto usa npm
+.yarnrc.yml
+.yarn/
+
+# Archivos de entorno de tests
+.env.test
 
 .medusa

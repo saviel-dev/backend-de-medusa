@@ -25,7 +25,12 @@ import {
   updateStoresStep,
   updateStoresWorkflow,
 } from "@medusajs/medusa/core-flows";
-import { ApiKey } from "../../.medusa/types/query-entry-points";
+// Tipo local mínimo para ApiKey — evita dependencia del directorio .medusa/ generado en build
+type ApiKey = {
+  id: string;
+  token: string;
+  [key: string]: unknown;
+};
 
 const updateStoreCurrencies = createWorkflow(
   "update-store-currencies",
@@ -359,7 +364,7 @@ export default async function seedDemoData({ container }: ExecArgs) {
       },
     });
 
-    publishableApiKey = publishableApiKeyResult as ApiKey;
+    publishableApiKey = publishableApiKeyResult as unknown as ApiKey;
   }
 
   await linkSalesChannelsToApiKeyWorkflow(container).run({
