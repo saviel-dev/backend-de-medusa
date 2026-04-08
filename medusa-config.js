@@ -1,8 +1,8 @@
-import { loadEnv, defineConfig } from "@medusajs/framework/utils";
+const { loadEnv, defineConfig } = require("@medusajs/framework/utils");
 
 loadEnv(process.env.NODE_ENV || "development", process.cwd());
 
-export default defineConfig({
+module.exports = defineConfig({
   projectConfig: {
     databaseUrl: process.env.DATABASE_URL || "postgres://localhost/medusa",
     redisUrl: process.env.REDIS_URL || "redis://localhost:6379",
