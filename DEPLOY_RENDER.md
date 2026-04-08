@@ -18,12 +18,12 @@ Guía definitiva para desplegar el backend de **MedusaJS v2** completamente grat
 4. Selecciona **"Prisma"** como ORM en el selector desplegable.
 5. Baja al paso 2 ("Configure ORM") y localiza la línea que dice:
    ```
-   DATABASE_URL="postgresql://postgres.XXXXXXXX:[YOUR-PASSWORD]@aws-0-us-east-1.pooler.supabase.com:6543/postgres"
+   DATABASE_URL="postgresql://postgres.XXXXXXXX:[YOUR-PASSWORD]@aws-0-us-east-1.pooler.supabase.com:5432/postgres"
    ```
 6. **Copia ese enlace** (entre las comillas) y **reemplaza `[YOUR-PASSWORD]`** con la contraseña que creaste en Supabase.
 
 > [!IMPORTANT]
-> Usa el enlace de la pestaña **ORM**, NO el de "Direct". El de ORM usa "Connection Pooling" que sí es compatible con servidores en la nube como Render.
+> Usa el enlace que tiene el puerto **5432** (Session Mode), NO el de 6543. El ORM de Medusa (Knex) requiere iniciar características de sesión durante el arranque, y el Transaction Mode (6543) causará que la aplicación haga timeout y no inicie.
 
 ---
 

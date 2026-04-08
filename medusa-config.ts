@@ -2,9 +2,20 @@ import { loadEnv, defineConfig } from "@medusajs/framework/utils";
 
 loadEnv(process.env.NODE_ENV || "development", process.cwd());
 
+let dbUrl = process.env.DATABASE_URL || "postgres://localhost/medusa";
+
+// Knex no soporta Supavisor en transaction mode (puerto 6543) correctamente sin configuraciones previas, 
+// lo que causa timeouts ("Timeout acquiring a connection"). Forzamos el uso de session mode (5432).
+if (dbUrl.includes("supabase.com") && dbUrl.includes(":6543")) {
+  dbUrl = dbUrl.replace(":6543", ":5432");
+}
+if (process.env.NODE_ENV !== "development" && !dbUrl.includes("sslmode=require")) {
+  dbUrl += dbUrl.includes("?") ? "&sslmode=require" : "?sslmode=require";
+}
+
 export default defineConfig({
   projectConfig: {
-    databaseUrl: process.env.DATABASE_URL || "postgres://localhost/medusa",
+    databaseUrl: dbUrl,
     databaseDriverOptions: process.env.NODE_ENV !== "development" ? { connection: { ssl: { rejectUnauthorized: false } } } : {},
     redisUrl: process.env.REDIS_URL || "redis://localhost:6379",
     http: {
