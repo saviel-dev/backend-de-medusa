@@ -17,7 +17,16 @@ export default defineConfig({
   projectConfig: {
     databaseUrl: dbUrl,
     databaseDriverOptions: process.env.NODE_ENV !== "development" ? { connection: { ssl: { rejectUnauthorized: false } } } : {},
-    redisUrl: process.env.REDIS_URL || "redis://localhost:6379",
+    redisUrl: process.env.REDIS_URL, // Sin fallback a localhost para evitar cuelgues infinitos en Render
+    redisOptions: {
+      maxRetriesPerRequest: 3,
+      retryStrategy: (times) => {
+        if (times > 3) {
+          return null; // Cancela el reintento infinito y suelta el error
+        }
+        return 1000;
+      }
+    },
     http: {
       storeCors: process.env.STORE_CORS || "http://localhost:8000",
       adminCors: process.env.ADMIN_CORS || "http://localhost:9000",
