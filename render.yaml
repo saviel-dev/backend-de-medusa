@@ -6,7 +6,7 @@ services:
     plan: free
     region: ohio
     buildCommand: "unset NODE_OPTIONS && cd .medusa/server && npm ci --omit=dev"
-    startCommand: "cd .medusa/server && npm run start"
+    startCommand: "cd .medusa/server && ./node_modules/.bin/medusa start --port 10000 --host 0.0.0.0"
     envVars:
       - key: NODE_ENV
         value: production
