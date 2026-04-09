@@ -17,16 +17,15 @@ export default defineConfig({
   projectConfig: {
     databaseUrl: dbUrl,
     databaseDriverOptions: process.env.NODE_ENV !== "development" ? { connection: { ssl: { rejectUnauthorized: false } } } : {},
-    redisUrl: process.env.REDIS_URL, // Sin fallback a localhost para evitar cuelgues infinitos en Render
-    redisOptions: {
-      maxRetriesPerRequest: 3,
-      retryStrategy: (times) => {
-        if (times > 3) {
-          return null; // Cancela el reintento infinito y suelta el error
-        }
-        return 1000;
-      }
-    },
+    // temporalmente deshabilitado para evitar crash en despliegue por credenciales de Upstash incorrectas:
+    // redisUrl: process.env.REDIS_URL ? process.env.REDIS_URL : undefined, 
+    // redisOptions: {
+    //   maxRetriesPerRequest: 3,
+    //   retryStrategy: (times) => {
+    //     if (times > 3) return null;
+    //     return 1000;
+    //   }
+    // },
     http: {
       storeCors: process.env.STORE_CORS || "http://localhost:8000",
       adminCors: process.env.ADMIN_CORS || "http://localhost:9000",
