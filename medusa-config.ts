@@ -16,7 +16,12 @@ if (process.env.NODE_ENV !== "development" && !dbUrl.includes("sslmode=require")
 export default defineConfig({
   projectConfig: {
     databaseUrl: dbUrl,
-    databaseDriverOptions: process.env.NODE_ENV !== "development" ? { connection: { ssl: { rejectUnauthorized: false } } } : {},
+    databaseDriverOptions: process.env.NODE_ENV !== "development" 
+      ? { 
+          connection: { ssl: { rejectUnauthorized: false } },
+          pool: { min: 0, max: 3, idleTimeoutMillis: 30000 } // Limita a 3 conexiones para evitar deadlock en Render
+        } 
+      : {},
     // temporalmente deshabilitado para evitar crash en despliegue por credenciales de Upstash incorrectas:
     // redisUrl: process.env.REDIS_URL ? process.env.REDIS_URL : undefined, 
     // redisOptions: {
